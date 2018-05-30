@@ -79,26 +79,35 @@
 
 
 
-<meta name="description" content="环境准备安装vagrant,选择合适的安装包  安装VirtualBox  创建一个目录,安装centos7 虚拟机 12345$ mkdir centos$ cd centos$ vagrant init centos/7  # 创建一个Vagrantfile$ vagrant up #开始下载并启动$ vagrant ssh   环境(centos7)已经准备好,开始安装docker 安装ce">
+<meta name="description" content="本节探讨一下docker 的多个容器是怎么通信的首先准备环境12$ docker pull busybox$ sudo yum install -y bridge-utils   启动一个容器1$ docker run -itd --name test1 busybox 再启动一个容器添加一个link1$ docker run -itd --name test2 --link=test1 busy">
 <meta name="keywords" content="node vue linux mongodb">
 <meta property="og:type" content="article">
-<meta property="og:title" content="docker 安装">
-<meta property="og:url" content="https://yijieyan.github.io/2018/05/25/docker1/index.html">
+<meta property="og:title" content="docker 网络">
+<meta property="og:url" content="https://yijieyan.github.io/2018/05/30/docker3/index.html">
 <meta property="og:site_name" content="blog">
-<meta property="og:description" content="环境准备安装vagrant,选择合适的安装包  安装VirtualBox  创建一个目录,安装centos7 虚拟机 12345$ mkdir centos$ cd centos$ vagrant init centos/7  # 创建一个Vagrantfile$ vagrant up #开始下载并启动$ vagrant ssh   环境(centos7)已经准备好,开始安装docker 安装ce">
+<meta property="og:description" content="本节探讨一下docker 的多个容器是怎么通信的首先准备环境12$ docker pull busybox$ sudo yum install -y bridge-utils   启动一个容器1$ docker run -itd --name test1 busybox 再启动一个容器添加一个link1$ docker run -itd --name test2 --link=test1 busy">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://yijieyan.github.io/2018/05/25/docker1/1.png">
-<meta property="og:image" content="https://yijieyan.github.io/2018/05/25/docker1/2.png">
-<meta property="og:image" content="https://yijieyan.github.io/2018/05/25/docker1/3.png">
-<meta property="og:image" content="https://yijieyan.github.io/2018/05/25/docker1/4.png">
-<meta property="og:image" content="https://yijieyan.github.io/2018/05/25/docker1/5.png">
-<meta property="og:image" content="https://yijieyan.github.io/2018/05/25/docker1/6.png">
-<meta property="og:image" content="https://yijieyan.github.io/2018/05/25/docker1/7.png">
-<meta property="og:updated_time" content="2018-05-25T14:22:35.000Z">
+<meta property="og:image" content="https://yijieyan.github.io/2018/05/30/docker3/1.png">
+<meta property="og:image" content="https://yijieyan.github.io/2018/05/30/docker3/2.png">
+<meta property="og:image" content="https://yijieyan.github.io/2018/05/30/docker3/3.png">
+<meta property="og:image" content="https://yijieyan.github.io/2018/05/30/docker3/4.png">
+<meta property="og:image" content="https://yijieyan.github.io/2018/05/30/docker3/5.png">
+<meta property="og:image" content="https://yijieyan.github.io/2018/05/30/docker3/6.png">
+<meta property="og:image" content="https://yijieyan.github.io/2018/05/30/docker3/7.png">
+<meta property="og:image" content="https://yijieyan.github.io/2018/05/30/docker3/8.png">
+<meta property="og:image" content="https://yijieyan.github.io/2018/05/30/docker3/9.png">
+<meta property="og:image" content="https://yijieyan.github.io/2018/05/30/docker3/10.png">
+<meta property="og:image" content="https://yijieyan.github.io/2018/05/30/docker3/11.png">
+<meta property="og:image" content="https://yijieyan.github.io/2018/05/30/docker3/12.png">
+<meta property="og:image" content="https://yijieyan.github.io/2018/05/30/docker3/13.png">
+<meta property="og:image" content="https://yijieyan.github.io/2018/05/30/docker3/14.png">
+<meta property="og:image" content="https://yijieyan.github.io/2018/05/30/docker3/15.png">
+<meta property="og:image" content="https://yijieyan.github.io/2018/05/30/docker3/16.png">
+<meta property="og:updated_time" content="2018-05-30T12:38:02.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="docker 安装">
-<meta name="twitter:description" content="环境准备安装vagrant,选择合适的安装包  安装VirtualBox  创建一个目录,安装centos7 虚拟机 12345$ mkdir centos$ cd centos$ vagrant init centos/7  # 创建一个Vagrantfile$ vagrant up #开始下载并启动$ vagrant ssh   环境(centos7)已经准备好,开始安装docker 安装ce">
-<meta name="twitter:image" content="https://yijieyan.github.io/2018/05/25/docker1/1.png">
+<meta name="twitter:title" content="docker 网络">
+<meta name="twitter:description" content="本节探讨一下docker 的多个容器是怎么通信的首先准备环境12$ docker pull busybox$ sudo yum install -y bridge-utils   启动一个容器1$ docker run -itd --name test1 busybox 再启动一个容器添加一个link1$ docker run -itd --name test2 --link=test1 busy">
+<meta name="twitter:image" content="https://yijieyan.github.io/2018/05/30/docker3/1.png">
 
 
 
@@ -128,13 +137,13 @@
 
 
 
-  <link rel="canonical" href="https://yijieyan.github.io/2018/05/25/docker1/"/>
+  <link rel="canonical" href="https://yijieyan.github.io/2018/05/30/docker3/"/>
 
 
 
 
 
-  <title>docker 安装 | blog</title>
+  <title>docker 网络 | blog</title>
   
 
 
@@ -241,7 +250,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yijieyan.github.io/2018/05/25/docker1/">
+    <link itemprop="mainEntityOfPage" href="https://yijieyan.github.io/2018/05/30/docker3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="yijie">
@@ -258,7 +267,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">docker 安装</h1>
+          <h1 class="post-title" itemprop="name headline">docker 网络</h1>
         
 
         <div class="post-meta">
@@ -270,8 +279,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-25T21:44:36+08:00">
-                2018-05-25
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-30T19:53:36+08:00">
+                2018-05-30
               </time>
             
 
@@ -308,28 +317,40 @@
       
 
       
-        <h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><p>安装<a href="https://www.vagrantup.com/downloads.html" target="_blank" rel="noopener">vagrant</a>,选择合适的安装包</p>
-<p><img src="/2018/05/25/docker1/1.png" alt=""></p>
-<p>安装<a href="https://www.virtualbox.org/wiki/Downloads" target="_blank" rel="noopener">VirtualBox</a></p>
-<p><img src="/2018/05/25/docker1/2.png" alt=""></p>
-<p>创建一个目录,安装centos7 虚拟机</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir centos</span><br><span class="line">$ cd centos</span><br><span class="line">$ vagrant init centos/7  # 创建一个Vagrantfile</span><br><span class="line">$ vagrant up #开始下载并启动</span><br><span class="line">$ vagrant ssh</span><br></pre></td></tr></table></figure>
-<p><img src="/2018/05/25/docker1/3.png" alt=""></p>
-<p><img src="/2018/05/25/docker1/4.png" alt=""></p>
-<p>环境(centos7)已经准备好,开始安装<a href="https://docs.docker.com/install/linux/docker-ce/centos/" target="_blank" rel="noopener">docker</a></p>
-<p>安装centos的社区版<a href="https://docs.docker.com/install/linux/docker-ce/centos/" target="_blank" rel="noopener">docker</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum remove docker \</span><br><span class="line">                  docker-client \</span><br><span class="line">                  docker-client-latest \</span><br><span class="line">                  docker-common \</span><br><span class="line">                  docker-latest \</span><br><span class="line">                  docker-latest-logrotate \</span><br><span class="line">                  docker-logrotate \</span><br><span class="line">                  docker-selinux \</span><br><span class="line">                  docker-engine-selinux \</span><br><span class="line">                  docker-engine</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum install -y yum-utils \</span><br><span class="line">  device-mapper-persistent-data \</span><br><span class="line">  lvm2</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum-config-manager \</span><br><span class="line">    --add-repo \</span><br><span class="line">    https://download.docker.com/linux/centos/docker-ce.repo</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum-config-manager --enable docker-ce-edge</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum-config-manager --enable docker-ce-test</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum install docker-ce -y</span><br></pre></td></tr></table></figure>
-<p>启动docker<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl start docker</span><br></pre></td></tr></table></figure></p>
-<p>运行一个hello-world镜像<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker run hello-world</span><br></pre></td></tr></table></figure></p>
-<p>由于网络原因直接拉取docker hub 上的镜像很慢,配置一下官网在中国的源</p>
-<p><img src="/2018/05/25/docker1/5.png" alt=""></p>
-<p><img src="/2018/05/25/docker1/6.png" alt=""><br>去掉权限不足<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ sudo groupadd docker</span><br><span class="line">$ sudo gpasswd -a vagrant docker</span><br><span class="line">$ sudo service docker restart</span><br><span class="line">$ exit</span><br><span class="line">$ vagrant ssh</span><br><span class="line">$ docker version</span><br></pre></td></tr></table></figure></p>
-<p><img src="/2018/05/25/docker1/7.png" alt=""></p>
+        <p>本节探讨一下docker 的多个容器是怎么通信的<br>首先准备环境<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ docker pull busybox</span><br><span class="line">$ sudo yum install -y bridge-utils</span><br></pre></td></tr></table></figure></p>
+<p><img src="/2018/05/30/docker3/1.png" alt=""></p>
+<p><img src="/2018/05/30/docker3/2.png" alt=""></p>
+<p>启动一个容器<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -itd --name test1 busybox</span><br></pre></td></tr></table></figure></p>
+<p><img src="/2018/05/30/docker3/3.png" alt=""><br>再启动一个容器添加一个link<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -itd --name test2 --link=test1 busybox</span><br></pre></td></tr></table></figure></p>
+<p><img src="/2018/05/30/docker3/4.png" alt=""><br>test2可以和test1进行通信说明是可达的<br>反之看一下test1 能否和test2通信<br><img src="/2018/05/30/docker3/5.png" alt=""><br>经过测试test1和test2是不可达的</p>
+<p>再看一下test1和test2连接的网桥<br><img src="/2018/05/30/docker3/6.png" alt=""><br>继续往下找</p>
+<p><img src="/2018/05/30/docker3/7.png" alt=""></p>
+<p>test1的ip:<br><img src="/2018/05/30/docker3/8.png" alt=""></p>
+<p>test2的ip:</p>
+<p><img src="/2018/05/30/docker3/9.png" alt=""></p>
+<p><img src="/2018/05/30/docker3/10.png" alt=""><br>可以进入test1和test2的容器内部查看ip和这里的一样,可以证明容器自动连接在docker0这个网卡上,默认是无法彼此间通信,需要用–link去指定</p>
+<blockquote>
+<p>如果容器启动的很多,–link的方法很不方便,下面换一种方法,创建一个网桥,所有的容器连接在新建的网桥上</p>
+</blockquote>
+<p>先把容器全部删掉</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker rm -f test1 test2</span><br></pre></td></tr></table></figure>
+<p>先看一下docker network 有哪些命令</p>
+<p><img src="/2018/05/30/docker3/11.png" alt=""></p>
+<p>下面先创建一个bridge<br>再启动2个容器并连接到新建的bridge上</p>
+<p><img src="/2018/05/30/docker3/12.png" alt=""></p>
+<p>再来看一下bridge 和new-bridge</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker network inspect bridge</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/05/30/docker3/13.png" alt=""><br>没有任何一个容器连接在bridge上</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker network inspect new-bridge</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/05/30/docker3/14.png" alt=""></p>
+<p>可以看到test1和test2确实连接在新建的  new-bridge上</p>
+<p>再一次进入test1 和test2容器内去ping 对方<br><img src="/2018/05/30/docker3/15.png" alt=""></p>
+<p><img src="/2018/05/30/docker3/16.png" alt=""><br>可以看到没有任何的容器连接在docker0上</p>
+<p>总结: 容器内之间进行通信的方式有2种</p>
+<ol>
+<li>启动的时候用–link 指定 container。</li>
+<li>新建一个网桥,把所有的容器连接在新建的网桥上。</li>
+</ol>
 
       
     </div>
@@ -354,8 +375,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/05/17/nginx_web/" rel="next" title="nginx 作为web服务器的常用配置">
-                <i class="fa fa-chevron-left"></i> nginx 作为web服务器的常用配置
+              <a href="/2018/05/30/docker2/" rel="next" title="docker 命令介绍">
+                <i class="fa fa-chevron-left"></i> docker 命令介绍
               </a>
             
           </div>
@@ -363,10 +384,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/05/30/docker2/" rel="prev" title="docker 命令介绍">
-                docker 命令介绍 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -418,17 +435,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -470,22 +478,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#环境准备"><span class="nav-number">1.</span> <span class="nav-text">环境准备</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
