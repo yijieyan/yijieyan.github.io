@@ -79,22 +79,18 @@
 
 
 
-<meta name="description" content="OSI七层模型:物理层、数据链路层、网络层、传输层、会话层、表示层、应用层。 TCP/IP五层模型:物理层、数据链路层、网络层、传输层、应用层。  http 经过多年的发展从最初的0.9、1.0、到目前使用最多的1.1再到了最新的2.0版本。 客户端和服务器通过http建立连接的过程:http属于应用层,通过tcp/ip的3次握手和服务器建立连接,然后进行数据交互,完成后关闭连接。   从上图Wi">
+<meta name="description" content="cache-control 的值有很多，以下截取一些比较常用的,具体的请参考mdn    参数 value     no-store 每次请求都去服务器获取,不用缓存   no-cache 每次请求必须去服务器验证缓存   max-age 设置客户端缓存多久后失效(单位为s)   s-max-age 设置中间代理服务器缓存多久后失效(单位为s)   Expires 设置到期的时间(单位为Date)">
 <meta name="keywords" content="node vue linux mongodb">
 <meta property="og:type" content="article">
-<meta property="og:title" content="http 简介">
-<meta property="og:url" content="https://yijieyan.github.io/2018/06/04/http1/index.html">
+<meta property="og:title" content="http cache-Control 缓存小节">
+<meta property="og:url" content="https://yijieyan.github.io/2018/06/05/http3/index.html">
 <meta property="og:site_name" content="blog">
-<meta property="og:description" content="OSI七层模型:物理层、数据链路层、网络层、传输层、会话层、表示层、应用层。 TCP/IP五层模型:物理层、数据链路层、网络层、传输层、应用层。  http 经过多年的发展从最初的0.9、1.0、到目前使用最多的1.1再到了最新的2.0版本。 客户端和服务器通过http建立连接的过程:http属于应用层,通过tcp/ip的3次握手和服务器建立连接,然后进行数据交互,完成后关闭连接。   从上图Wi">
+<meta property="og:description" content="cache-control 的值有很多，以下截取一些比较常用的,具体的请参考mdn    参数 value     no-store 每次请求都去服务器获取,不用缓存   no-cache 每次请求必须去服务器验证缓存   max-age 设置客户端缓存多久后失效(单位为s)   s-max-age 设置中间代理服务器缓存多久后失效(单位为s)   Expires 设置到期的时间(单位为Date)">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://yijieyan.github.io/2018/06/04/http1/1.png">
-<meta property="og:image" content="https://yijieyan.github.io/2018/06/04/http1/2.png">
-<meta property="og:image" content="https://yijieyan.github.io/2018/06/04/http1/3.png">
-<meta property="og:updated_time" content="2018-06-04T04:53:08.000Z">
+<meta property="og:updated_time" content="2018-06-05T08:30:53.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="http 简介">
-<meta name="twitter:description" content="OSI七层模型:物理层、数据链路层、网络层、传输层、会话层、表示层、应用层。 TCP/IP五层模型:物理层、数据链路层、网络层、传输层、应用层。  http 经过多年的发展从最初的0.9、1.0、到目前使用最多的1.1再到了最新的2.0版本。 客户端和服务器通过http建立连接的过程:http属于应用层,通过tcp/ip的3次握手和服务器建立连接,然后进行数据交互,完成后关闭连接。   从上图Wi">
-<meta name="twitter:image" content="https://yijieyan.github.io/2018/06/04/http1/1.png">
+<meta name="twitter:title" content="http cache-Control 缓存小节">
+<meta name="twitter:description" content="cache-control 的值有很多，以下截取一些比较常用的,具体的请参考mdn    参数 value     no-store 每次请求都去服务器获取,不用缓存   no-cache 每次请求必须去服务器验证缓存   max-age 设置客户端缓存多久后失效(单位为s)   s-max-age 设置中间代理服务器缓存多久后失效(单位为s)   Expires 设置到期的时间(单位为Date)">
 
 
 
@@ -124,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://yijieyan.github.io/2018/06/04/http1/"/>
+  <link rel="canonical" href="https://yijieyan.github.io/2018/06/05/http3/"/>
 
 
 
 
 
-  <title>http 简介 | blog</title>
+  <title>http cache-Control 缓存小节 | blog</title>
   
 
 
@@ -237,7 +233,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yijieyan.github.io/2018/06/04/http1/">
+    <link itemprop="mainEntityOfPage" href="https://yijieyan.github.io/2018/06/05/http3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="yijie">
@@ -254,7 +250,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">http 简介</h1>
+          <h1 class="post-title" itemprop="name headline">http cache-Control 缓存小节</h1>
         
 
         <div class="post-meta">
@@ -266,8 +262,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-04T12:16:15+08:00">
-                2018-06-04
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-05T09:18:37+08:00">
+                2018-06-05
               </time>
             
 
@@ -304,17 +300,65 @@
       
 
       
-        <p><a href="https://baike.baidu.com/item/%E5%BC%80%E6%94%BE%E7%B3%BB%E7%BB%9F%E4%BA%92%E8%BF%9E%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B/8851889?fr=aladdin&amp;fromid=9763441&amp;fromtitle=OSI%E4%B8%83%E5%B1%82%E6%A8%A1%E5%9E%8B" target="_blank" rel="noopener">OSI七层模型</a>:物理层、数据链路层、网络层、传输层、会话层、表示层、应用层。</p>
-<p>TCP/IP五层模型:物理层、数据链路层、网络层、传输层、应用层。</p>
-<p><img src="/2018/06/04/http1/1.png" alt=""></p>
-<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Basics_of_HTTP/Evolution_of_HTTP" target="_blank" rel="noopener">http</a> 经过多年的发展从最初的0.9、1.0、到目前使用最多的1.1再到了最新的2.0版本。</p>
-<p>客户端和服务器通过http建立连接的过程:<br>http属于应用层,通过tcp/ip的3次握手和服务器建立连接,然后进行数据交互,完成后关闭连接。</p>
-<p><img src="/2018/06/04/http1/2.png" alt=""></p>
-<p><img src="/2018/06/04/http1/3.png" alt=""></p>
-<p>从上图Wireshark的结果来看,每次返回的ack总会等于上一次的seq+1;</p>
-<p>http1.0:一次建立的tcp链接只能和服务器交互一次就关闭。</p>
-<p>http1.1:设置Connection: keep-alive。<br>一条tcp链接只能串行的和服务器进行交互。</p>
-<p>http2.0: 一条tcp链接可以并行的和服务器进行交互。</p>
+        <p>cache-control 的值有很多，以下截取一些比较常用的,具体的请参考<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Caching_FAQ" target="_blank" rel="noopener">mdn</a></p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>no-store</td>
+<td>每次请求都去服务器获取,不用缓存</td>
+</tr>
+<tr>
+<td>no-cache</td>
+<td>每次请求必须去服务器验证缓存</td>
+</tr>
+<tr>
+<td>max-age</td>
+<td>设置客户端缓存多久后失效(单位为s)</td>
+</tr>
+<tr>
+<td>s-max-age</td>
+<td>设置中间代理服务器缓存多久后失效(单位为s)</td>
+</tr>
+<tr>
+<td>Expires</td>
+<td>设置到期的时间(单位为Date)</td>
+</tr>
+<tr>
+<td>must-revalidate</td>
+<td>缓存到期后必须去目标服务器(不会从代理服务器)去验证缓存是否有改变</td>
+</tr>
+<tr>
+<td>ETags</td>
+<td>一种强校验器,根据请求的内容生成的一个签名值</td>
+</tr>
+<tr>
+<td>Last-Modified</td>
+<td>一种弱校验器。说它弱是因为它只能精确到秒</td>
+</tr>
+<tr>
+<td>private</td>
+<td>所有的中间服务器和浏览器都可以缓存</td>
+</tr>
+<tr>
+<td>public</td>
+<td>只允许浏览器缓存,中间代理服务器不能缓存</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>上一次response返回ETags,下一次请求header会带上If-None-Match字段和服务器的ETag进行比较<br>response 返回的Last-Modified ,会在下一次请求header中带上If-Modified-Since和服务器的Last-Modified比较</p>
+</blockquote>
+<p>可以通过服务端(测试用的koa)不同的设置去验证,测试代理服务器可以中间加一层nginx代理3000端口,去设置nginx的缓存验证<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">let koa = require(&apos;koa&apos;);</span><br><span class="line">let app =new koa();</span><br><span class="line"></span><br><span class="line">app.use(async (ctx, next) =&gt; &#123;</span><br><span class="line">  console.log(ctx.request.url);</span><br><span class="line">  ctx.set(&quot;Access-Control-Allow-Origin&quot;,&quot;*&quot;);</span><br><span class="line">  ctx.set(&quot;Access-Control-Allow-Headers&quot;, &quot;token&quot;);</span><br><span class="line">  if (ctx.request.url === &apos;/1.js&apos;) &#123;</span><br><span class="line">    let etag = &apos;123&apos;;</span><br><span class="line">    if (ctx.header[&quot;if-none-match&quot;] === etag) &#123;</span><br><span class="line">        ctx.status = 304;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      ctx.set(&apos;Cache-Control&apos;, &apos;max-age=5&apos;);</span><br><span class="line">      ctx.set(&apos;ETag&apos;, etag);</span><br><span class="line">      ctx.set(&apos;Last-Modified&apos;, Date.now());</span><br><span class="line">      ctx.set(&apos;Content-Type&apos;, &apos;application/javascript&apos;);</span><br><span class="line">      ctx.body = `console.log(&quot;hello everyone&quot;)`;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>客户端测试代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">  &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;</span><br><span class="line">  &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;ie=edge&quot;&gt;</span><br><span class="line">  &lt;title&gt;Document&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;script src=&quot;http://127.0.0.1:3000/1.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>前端通过http-server代理</p>
+</blockquote>
 
       
     </div>
@@ -339,8 +383,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/05/30/docker3/" rel="next" title="docker 网络">
-                <i class="fa fa-chevron-left"></i> docker 网络
+              <a href="/2018/06/04/http2/" rel="next" title="http cors 简介">
+                <i class="fa fa-chevron-left"></i> http cors 简介
               </a>
             
           </div>
@@ -348,10 +392,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/06/04/http2/" rel="prev" title="http cors 简介">
-                http cors 简介 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
