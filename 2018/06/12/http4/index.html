@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1.http长连接短连接:在HTTP/1.0中默认使用短连接。也就是说，客户端和服务器每进行一次HTTP操作，就建立一次连接，任务结束就中断连接。 长连接:HTTP/1.1起，默认使用长连接，用以保持连接特性。使用长连接的HTTP协议，会在响应头加入这行代码： Connection:keep-alive在使用长连接的情况下，当一个网页打开完成后，客户端和服务器之间用于传输HTTP数据的TCP连接不">
+<meta name="keywords" content="node vue linux mongodb">
+<meta property="og:type" content="article">
+<meta property="og:title" content="http长连接、cookie、数据协商">
+<meta property="og:url" content="https://yijieyan.github.io/2018/06/12/http4/index.html">
+<meta property="og:site_name" content="blog">
+<meta property="og:description" content="1.http长连接短连接:在HTTP/1.0中默认使用短连接。也就是说，客户端和服务器每进行一次HTTP操作，就建立一次连接，任务结束就中断连接。 长连接:HTTP/1.1起，默认使用长连接，用以保持连接特性。使用长连接的HTTP协议，会在响应头加入这行代码： Connection:keep-alive在使用长连接的情况下，当一个网页打开完成后，客户端和服务器之间用于传输HTTP数据的TCP连接不">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://yijieyan.github.io/2018/06/12/http4/http4/2.png">
+<meta property="og:image" content="https://yijieyan.github.io/2018/06/12/http4/http4/4.png">
+<meta property="og:image" content="https://yijieyan.github.io/2018/06/12/http4/http4/3.png">
+<meta property="og:image" content="https://yijieyan.github.io/2018/06/12/http4/http4/1.png">
+<meta property="og:image" content="https://yijieyan.github.io/2018/06/12/http4/http4/5.png">
+<meta property="og:image" content="https://yijieyan.github.io/2018/06/12/http4/http4/6.png">
+<meta property="og:updated_time" content="2018-06-13T01:56:40.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="http长连接、cookie、数据协商">
+<meta name="twitter:description" content="1.http长连接短连接:在HTTP/1.0中默认使用短连接。也就是说，客户端和服务器每进行一次HTTP操作，就建立一次连接，任务结束就中断连接。 长连接:HTTP/1.1起，默认使用长连接，用以保持连接特性。使用长连接的HTTP协议，会在响应头加入这行代码： Connection:keep-alive在使用长连接的情况下，当一个网页打开完成后，客户端和服务器之间用于传输HTTP数据的TCP连接不">
+<meta name="twitter:image" content="https://yijieyan.github.io/2018/06/12/http4/http4/2.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://yijieyan.github.io/2018/06/12/http4/"/>
+
+
+
+
+
+  <title>http长连接、cookie、数据协商 | blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">yijie's blog</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yijieyan.github.io/2018/06/12/http4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yijie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">http长连接、cookie、数据协商</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-12T12:58:03+08:00">
+                2018-06-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="1-http长连接"><a href="#1-http长连接" class="headerlink" title="1.http长连接"></a>1.http长连接</h3><p>短连接:在HTTP/1.0中默认使用短连接。也就是说，客户端和服务器每进行一次HTTP操作，就建立一次连接，任务结束就中断连接。</p>
+<p>长连接:HTTP/1.1起，默认使用长连接，用以保持连接特性。使用长连接的HTTP协议，会在响应头加入这行代码：</p>
+<p>Connection:keep-alive<br>在使用长连接的情况下，当一个网页打开完成后，客户端和服务器之间用于传输HTTP数据的TCP连接不会关闭，客户端再次访问这个服务器时，会继续使用这一条已经建立的连接。Keep-Alive不会永久保持连接，它有一个保持时间，可以在不同的服务器软件（如Apache）中设定这个时间。实现长连接需要客户端和服务端都支持长连接。</p>
+<p>实验代码:<br>前端:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">  &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;</span><br><span class="line">  &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;ie=edge&quot;&gt;</span><br><span class="line">  &lt;title&gt;Document&lt;/title&gt;</span><br><span class="line">  &lt;style&gt;</span><br><span class="line">    img &#123;</span><br><span class="line">      width: 400px;</span><br><span class="line">      height: 200px;</span><br><span class="line">    &#125;</span><br><span class="line">  &lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;img src=&quot;http://localhost:3000/1.jpg&quot;/&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
+<p>后端代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">let koa = require(&apos;koa&apos;);</span><br><span class="line">let app =new koa();</span><br><span class="line">let fs = require(&apos;fs&apos;);</span><br><span class="line">let path = require(&apos;path&apos;);</span><br><span class="line">app.use(async (ctx, next) =&gt; &#123;</span><br><span class="line">  ctx.set(&apos;Content-Type&apos;, &apos;image/jpg&apos;);</span><br><span class="line">  ctx.body = fs.createReadStream(path.join(__dirname, &apos;./imgs/jinkesi.jpg&apos;));</span><br><span class="line">&#125;);</span><br><span class="line">app.listen(3000, () =&gt; &#123;</span><br><span class="line">  console.log(`listen 3000 ...`);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>自己在app.js同级建一个名字为imgs的目录丢进去一张图片,修改一下代码里的图片名称</p>
+</blockquote>
+<p>运行前端代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ http-server # 自行用npm安装,在这里代理前端的代码</span><br></pre></td></tr></table></figure></p>
+<p>运行后端代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ node app.js</span><br></pre></td></tr></table></figure></p>
+<p><img src="./http4/2.png" alt=""></p>
+<blockquote>
+<p>可以看到response是有一个Connection:keep-alive,表示当前链接,server响应完前端的请求不会立即关闭。</p>
+</blockquote>
+<p>如果多加一些请求,实验环节,多请求一些图片:<br>前端代码修改为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;img src=&quot;http://localhost:3000/1.jpg&quot;/&gt;</span><br><span class="line">  &lt;img src=&quot;http://localhost:3000/2.jpg&quot;/&gt;</span><br><span class="line">  &lt;img src=&quot;http://localhost:3000/3.jpg&quot;/&gt;</span><br><span class="line">  &lt;img src=&quot;http://localhost:3000/4.jpg&quot;/&gt;</span><br><span class="line">  &lt;img src=&quot;http://localhost:3000/5.jpg&quot;/&gt;</span><br><span class="line">  &lt;img src=&quot;http://localhost:3000/6.jpg&quot;/&gt;</span><br><span class="line">  &lt;img src=&quot;http://localhost:3000/7.jpg&quot;/&gt;</span><br><span class="line">  &lt;img src=&quot;http://localhost:3000/8.jpg&quot;/&gt;</span><br><span class="line">  &lt;img src=&quot;http://localhost:3000/9.jpg&quot;/&gt;</span><br><span class="line">  &lt;img src=&quot;http://localhost:3000/10.jpg&quot;/&gt;</span><br><span class="line">  &lt;img src=&quot;http://localhost:3000/11.jpg&quot;/&gt;</span><br><span class="line">  &lt;img src=&quot;http://localhost:3000/12.jpg&quot;/&gt;</span><br><span class="line">  &lt;img src=&quot;http://localhost:3000/13.jpg&quot;/&gt;</span><br><span class="line">  &lt;img src=&quot;http://localhost:3000/14.jpg&quot;/&gt;</span><br></pre></td></tr></table></figure>
+<p>通过选择空白出右键勾上Connection ID选项,可以方便的查看请求使用的tcp链接:</p>
+<p><img src="./http4/4.png" alt=""></p>
+<p>然后访问浏览器查看network:</p>
+<p><img src="./http4/3.png" alt=""></p>
+<p>通过浏览器的network可以看到不同的请求会重复使用一个tcp链接的,也就是说明connection没有立即关闭。</p>
+<h3 id="2-cookie"><a href="#2-cookie" class="headerlink" title="2.cookie"></a>2.<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Document/cookie" target="_blank" rel="noopener">cookie</a></h3><p>实验代码:<br>前端:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">  fetch(&apos;http://localhost:3000/1.js&apos;)</span><br><span class="line">    .then((res) =&gt; &#123;</span><br><span class="line">        return res.text();</span><br><span class="line">    &#125;).then(data =&gt; &#123;</span><br><span class="line">      console.log(data);</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
+<p>后端:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">let koa = require(&apos;koa&apos;);</span><br><span class="line">let app =new koa();</span><br><span class="line">app.keys = [&apos;im a newer secret&apos;, &apos;i like turtle&apos;];</span><br><span class="line">app.use(async (ctx, next) =&gt; &#123;</span><br><span class="line">  ctx.set(&quot;Access-Control-Allow-Origin&quot;,&quot;*&quot;);</span><br><span class="line">  if (ctx.request.url === &apos;/1.js&apos;) &#123;</span><br><span class="line">    ctx.cookies.set(&apos;name&apos;, &apos;tobi&apos;, &#123;</span><br><span class="line">      sign: true,</span><br><span class="line">      maxAge: 10,</span><br><span class="line">      httpOnly:false</span><br><span class="line">    &#125;);</span><br><span class="line">    ctx.body = `console.log(&quot;hello everyone&quot;)`;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line">app.listen(3000, () =&gt; &#123;</span><br><span class="line">  console.log(`listen 3000 ...`);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>cookie 的配置选项:</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>max-age</td>
+<td>多少秒后过期</td>
+</tr>
+<tr>
+<td>expires</td>
+<td>过期的时间点</td>
+</tr>
+<tr>
+<td>secure</td>
+<td>只允许https传输</td>
+</tr>
+<tr>
+<td>domain</td>
+<td>设置的域名,设置主域名,子域名也可以使用</td>
+</tr>
+<tr>
+<td>httpOnly</td>
+<td>前端js是否允许操作js</td>
+</tr>
+<tr>
+<td>overwrite</td>
+<td>是否允许重写</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>如果max-age 和expires 都没有设置会cookie会在会话关闭消失。</p>
+</blockquote>
+<p>可以通过设置不同的参数给浏览器。</p>
+<p><img src="./http4/1.png" alt=""></p>
+<h3 id="3-数据协商"><a href="#3-数据协商" class="headerlink" title="3.数据协商"></a>3.数据协商</h3><p>数据协商:浏览器 和服务器通信的时候,浏览器会告诉服务器我需要什么格式的数据,我希望是接收什么语言,我能解压哪些压缩格式,压缩的代码。<br>举个例子:</p>
+<p><img src="./http4/5.png" alt=""></p>
+<p>上图中的Accept、Accept-Encoding、Accept-Language 分别告诉浏览器希望接收什么样的消息,什么压缩算法、什么语言。</p>
+<blockquote>
+<p>q=0.9 表示前面的格式代表的权重,权重越大更希望服务器返回权重大的,如果服务器没有,一次往下排。</p>
+</blockquote>
+<p><span style="color:red;">这些是浏览器根据http协议的规范带上去的,至于服务器端会不会也完全遵守http协议？确不一定。</span></p>
+<p>再看一张服务器返回(response)的图:</p>
+<p><img src="./http4/6.png" alt=""><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Cache-Control: private #代理服务器不要缓存</span><br><span class="line">Connection: Keep-Alive # 长连接</span><br><span class="line">Content-Type: text/html# 服务器返回的消息的格式，和request里的Accept 对应。</span><br><span class="line">Content-Encoding: gzip # 是服务器返回的压缩方式。</span><br><span class="line">Vary: Accept-Encoding # 如果 url 和Accept-Encoding 相同才使用代理服务器的缓存,否则不用代理服务器的缓存 (一个请求从浏览器到服务器中间可能经过很多的代理服务器,如果服务器设置了s-max-age,会被代理服务器缓存的,相同的请求可能得到的数据来自代理服务器比如nginx)</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/05/http3/" rel="next" title="http cache-Control 缓存小节">
+                <i class="fa fa-chevron-left"></i> http cache-Control 缓存小节
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">yijie</p>
+              <p class="site-description motion-element" itemprop="description">记录日常的学习</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-http长连接"><span class="nav-number">1.</span> <span class="nav-text">1.http长连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-cookie"><span class="nav-number">2.</span> <span class="nav-text">2.cookie</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-数据协商"><span class="nav-number">3.</span> <span class="nav-text">3.数据协商</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yijie</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
